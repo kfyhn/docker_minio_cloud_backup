@@ -48,5 +48,5 @@ done
 	
 #s3cmd --no-check-md5 --access_key=$DEST_ACCESS_KEY --secret_key=$DEST_SECRET_KEY --host=$DEST_HOST_ENDPOINT --host-bucket="$DEST_HOST_ENDPOINT/%(bucket)" sync --skip-existing ${BACKUP_DIR}/ s3://gitlab-backup-bucket 
 ossutil64 --access-key-id=$DEST_ACCESS_KEY --access-key-secret=$DEST_SECRET_KEY --endpoint=$DEST_HOST_ENDPOINT \
-    cp --recursive --force ${BACKUP_DIR} oss://gitlab-backup-bucket 
+    cp --recursive --force --update ${BACKUP_DIR} oss://gitlab-backup-bucket 
 echo "Backup complete!"
