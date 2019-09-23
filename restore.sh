@@ -46,7 +46,7 @@ do
 	#s3cmd --access_key=$SOURCE_ACCESS_KEY --secret_key=$SOURCE_SECRET_KEY --host=$SOURCE_HOST_ENDPOINT --host-bucket="$SOURCE_HOST_ENDPOINT/%(bucket)" \
     #    rm -r $BUCKET/*
 	s3cmd --access_key=$SOURCE_ACCESS_KEY --secret_key=$SOURCE_SECRET_KEY --host=$SOURCE_HOST_ENDPOINT --host-bucket="$SOURCE_HOST_ENDPOINT/%(bucket)" \
-        sync --skip-existing --human-readable-sizes ${BACKUP_DIR}/${LOCAL_DIR} $BUCKET
+        sync --skip-existing --human-readable-sizes ${BACKUP_DIR}/${LOCAL_DIR}/ $BUCKET
 done
 	
 echo "Restore complete!"
