@@ -1,5 +1,7 @@
 FROM alpine:3.8
 
+RUN addgroup -S -g 2000 user_group && adduser -S user -G user_group -u 2001
+
 RUN apk update
 RUN apk add --no-cache libc6-compat bash python py-pip py-setuptools git ca-certificates
 RUN pip install python-dateutil
@@ -23,4 +25,7 @@ RUN mkdir -p /tmp/backups
 
 RUN chmod 777 backup.sh
 RUN chmod 777 restore.sh
+
+USER user
+
 
