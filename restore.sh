@@ -31,7 +31,7 @@ if [ -z "${DEST_HOST_ENDPOINT}" ]; then
     echo "The environment variable DEST_HOST_ENDPOINT is not set."
     exit 1
 fi
-BACKUP_DIR=/tmp/backups
+BACKUP_DIR=/home/user/backups
 rm -r ${BACKUP_DIR}/*
 
 #s3cmd --no-check-md5 --access_key=$DEST_ACCESS_KEY --secret_key=$DEST_SECRET_KEY --host=$DEST_HOST_ENDPOINT --host-bucket="$DEST_HOST_ENDPOINT/%(bucket)" sync --skip-existing s3://gitlab-backup-bucket ${BACKUP_DIR}

@@ -32,7 +32,7 @@ if [ -z "${DEST_HOST_ENDPOINT}" ]; then
     exit 1
 fi
 
-BACKUP_DIR=/tmp/backups
+BACKUP_DIR=/home/user/backups
 rm -r ${BACKUP_DIR}/*
 
 IFS=$'\n'

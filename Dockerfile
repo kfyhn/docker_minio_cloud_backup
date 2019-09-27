@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-RUN addgroup -S -g 2000 user_group && adduser -S user -G user_group -u 2001
+RUN addgroup -S -g 1000 user_group && adduser -S user -G user_group -u 1000
 
 RUN apk update
 RUN apk add --no-cache libc6-compat bash python py-pip py-setuptools git ca-certificates
@@ -15,17 +15,19 @@ RUN wget http://gosspublic.alicdn.com/ossutil/1.6.1/ossutil64 -O /opt/ossutil64
 RUN chmod 755 /opt/ossutil64
 RUN ln -s /opt/ossutil64 /usr/bin/ossutil64
 
-WORKDIR /opt
+ADD .s3cfg /home/user/.s3cfg
+ADD backup.sh /home/user/backup.sh
+ADD restore.sh /home/user/restore.sh
+RUN chown user:user_group /home/user/backup.sh
+RUN chown user:user_group /home/user/restore.sh
 
-ADD .s3cfg /root/.s3cfg
-ADD backup.sh /opt/backup.sh
-ADD restore.sh /opt/restore.sh
-
-RUN mkdir -p /tmp/backups
-
-RUN chmod 777 backup.sh
-RUN chmod 777 restore.sh
-
+WORKDIR /home/user
 USER user
+
+RUN mkdir -p /home/user/backups
+RUN chmod +x backup.sh
+RUN chmod +x restore.sh
+
+
 
 
