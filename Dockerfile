@@ -24,7 +24,7 @@ RUN chown user:user_group /home/user/restore.sh
 WORKDIR /home/user
 USER user
 
-RUN mkdir -p /home/user/backups
+RUN mkdir -p /home/user/tmp_backups
 RUN chmod +x backup.sh
 RUN chmod +x restore.sh
 

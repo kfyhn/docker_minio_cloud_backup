@@ -3,7 +3,7 @@ NAME=minio_cloud_backup
 build:
 	docker build -t ${NAME} .
 
-run:
+run: build
 	docker run --rm -it --name ${NAME} \
 		--env SOURCE_ACCESS_KEY=${SOURCE_ACCESS_KEY} \
 		--env SOURCE_SECRET_KEY=${SOURCE_SECRET_KEY} \
