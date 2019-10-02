@@ -31,11 +31,15 @@ if [ -z "${DEST_HOST_ENDPOINT}" ]; then
     echo "The environment variable DEST_HOST_ENDPOINT is not set."
     exit 1
 fi
+
+echo "Now starting restore job..."
+
 BACKUP_DIR=/home/user/tmp_backups
 
 ossutil64 --access-key-id=$DEST_ACCESS_KEY --access-key-secret=$DEST_SECRET_KEY --endpoint=$DEST_HOST_ENDPOINT \
     cp --recursive --force --update oss://gitlab-backup-bucket ${BACKUP_DIR}
 
+echo "All files retrieved from Alibaba OSS. Now transferring to Minio..."
 IFS=$'\n'
 for LINE in $(s3cmd --access_key=$SOURCE_ACCESS_KEY --secret_key=$SOURCE_SECRET_KEY --host=$SOURCE_HOST_ENDPOINT ls)
 do 

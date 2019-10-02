@@ -32,6 +32,8 @@ if [ -z "${DEST_HOST_ENDPOINT}" ]; then
     exit 1
 fi
 
+echo "Starting backup..."
+
 BACKUP_DIR=/home/user/tmp_backups
 
 IFS=$'\n'
@@ -44,7 +46,9 @@ do
     s3cmd --access_key=$SOURCE_ACCESS_KEY --secret_key=$SOURCE_SECRET_KEY --host=$SOURCE_HOST_ENDPOINT --host-bucket="$SOURCE_HOST_ENDPOINT/%(bucket)" \
         sync --no-check-md5 --human-readable-sizes $BUCKET ${BACKUP_DIR}/${LOCAL_DIR}
 done
-	
+
+echo "All files retrieved from Minio. Now transferring to Alibaba OSS..."
+
 ossutil64 --access-key-id=$DEST_ACCESS_KEY --access-key-secret=$DEST_SECRET_KEY --endpoint=$DEST_HOST_ENDPOINT \
     cp --recursive --force --update ${BACKUP_DIR} oss://gitlab-backup-bucket 
 echo "Backup complete!"
