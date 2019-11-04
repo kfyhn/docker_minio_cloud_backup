@@ -11,6 +11,7 @@ run: build
 		--env DEST_ACCESS_KEY=${DEST_ACCESS_KEY} \
 		--env DEST_SECRET_KEY=${DEST_SECRET_KEY} \
 		--env DEST_HOST_ENDPOINT=${DEST_HOST_ENDPOINT} \
+		--env BUCKET_NAME=${BUCKET_NAME} \
 		${NAME} \
 		/bin/bash
 
@@ -22,6 +23,7 @@ backup:
 		--env DEST_ACCESS_KEY=${DEST_ACCESS_KEY} \
 		--env DEST_SECRET_KEY=${DEST_SECRET_KEY} \
 		--env DEST_HOST_ENDPOINT=${DEST_HOST_ENDPOINT} \
+		--env BUCKET_NAME=${BUCKET_NAME} \
 		${NAME} \
 		./backup.sh
 
@@ -33,5 +35,6 @@ restore:
 		--env DEST_ACCESS_KEY=${DEST_ACCESS_KEY} \
 		--env DEST_SECRET_KEY=${DEST_SECRET_KEY} \
 		--env DEST_HOST_ENDPOINT=${DEST_HOST_ENDPOINT} \
+		--env BUCKET_NAME=${BUCKET_NAME} \
 		${NAME} \
 		./restore.sh

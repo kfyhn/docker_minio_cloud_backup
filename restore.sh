@@ -32,12 +32,17 @@ if [ -z "${DEST_HOST_ENDPOINT}" ]; then
     exit 1
 fi
 
+if [ -z "${BUCKET_NAME}" ]; then
+    echo "The environment variable BUCKET_NAME is not set."
+    exit 1
+fi
+
 echo "Now starting restore job..."
 
 BACKUP_DIR=/home/user/tmp_backups
 
 ossutil64 --access-key-id=$DEST_ACCESS_KEY --access-key-secret=$DEST_SECRET_KEY --endpoint=$DEST_HOST_ENDPOINT \
-    cp --recursive --force --update oss://gitlab-backup-bucket ${BACKUP_DIR}
+    cp --recursive --force --update oss://$BUCKET_NAME ${BACKUP_DIR}
 
 echo "All files retrieved from Alibaba OSS. Now transferring to Minio..."
 IFS=$'\n'

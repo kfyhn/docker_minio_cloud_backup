@@ -32,6 +32,11 @@ if [ -z "${DEST_HOST_ENDPOINT}" ]; then
     exit 1
 fi
 
+if [ -z "${BUCKET_NAME}" ]; then
+    echo "The environment variable BUCKET_NAME is not set."
+    exit 1
+fi
+
 echo "Starting backup..."
 
 BACKUP_DIR=/home/user/tmp_backups
@@ -50,5 +55,5 @@ done
 echo "All files retrieved from Minio. Now transferring to Alibaba OSS..."
 
 ossutil64 --access-key-id=$DEST_ACCESS_KEY --access-key-secret=$DEST_SECRET_KEY --endpoint=$DEST_HOST_ENDPOINT \
-    cp --recursive --force --update ${BACKUP_DIR} oss://gitlab-backup-bucket 
+    cp --recursive --force --update ${BACKUP_DIR} oss://$BUCKET_NAME 
 echo "Backup complete!"
