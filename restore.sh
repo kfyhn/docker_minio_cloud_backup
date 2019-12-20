@@ -1,4 +1,7 @@
 #!/bin/bash
+set -o errexit
+set -u
+
 #
 # Check for required parameters
 #
