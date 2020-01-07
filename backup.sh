@@ -60,7 +60,7 @@ do
     mkdir -p ${BACKUP_DIR}/${LOCAL_DIR}
     s3cmd --access_key=$SOURCE_ACCESS_KEY --secret_key=$SOURCE_SECRET_KEY --host=$SOURCE_HOST_ENDPOINT --host-bucket="$SOURCE_HOST_ENDPOINT/%(bucket)" \
         sync --no-check-md5 --human-readable-sizes $BUCKET ${BACKUP_DIR}/${LOCAL_DIR}
-done
+done || exit 1
 
 echo "All files retrieved from Minio. Now transferring to Alibaba OSS..."
 
