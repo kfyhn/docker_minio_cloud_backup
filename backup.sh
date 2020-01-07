@@ -39,16 +39,23 @@ if [ -z "${BUCKET_NAME}" ]; then
     echo "The environment variable BUCKET_NAME is not set."
     exit 1
 fi
+BACKUP_DIR=/home/user/tmp_backups
+IFS=$'\n'
+
+echo "Validating connection to Minio..."
+s3cmd --access_key=$SOURCE_ACCESS_KEY --secret_key=$SOURCE_SECRET_KEY --host=$SOURCE_HOST_ENDPOINT ls
+if [ $? -eq 0 ]; then
+    echo "Connection OK!"
+else
+    echo "Connection failed!"
+    exit 1
+fi
 
 echo "Starting backup..."
-
-BACKUP_DIR=/home/user/tmp_backups
-
-IFS=$'\n'
 for LINE in $(s3cmd --access_key=$SOURCE_ACCESS_KEY --secret_key=$SOURCE_SECRET_KEY --host=$SOURCE_HOST_ENDPOINT ls)
 do 
-	BUCKET=$(awk '{print $3}' <<< $LINE)
-	LOCAL_DIR=$(cut -c 6- <<< $BUCKET)
+    BUCKET=$(awk '{print $3}' <<< $LINE)
+    LOCAL_DIR=$(cut -c 6- <<< $BUCKET)
     echo "Now backing up ${LOCAL_DIR}..."
     mkdir -p ${BACKUP_DIR}/${LOCAL_DIR}
     s3cmd --access_key=$SOURCE_ACCESS_KEY --secret_key=$SOURCE_SECRET_KEY --host=$SOURCE_HOST_ENDPOINT --host-bucket="$SOURCE_HOST_ENDPOINT/%(bucket)" \
