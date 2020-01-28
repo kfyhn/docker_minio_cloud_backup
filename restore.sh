@@ -45,7 +45,7 @@ echo "Now starting restore job..."
 BACKUP_DIR=/home/user/tmp_backups
 
 ossutil64 --access-key-id=$DEST_ACCESS_KEY --access-key-secret=$DEST_SECRET_KEY --endpoint=$DEST_HOST_ENDPOINT \
-    cp --recursive --force --update oss://$BUCKET_NAME ${BACKUP_DIR}
+    cp --recursive oss://$BUCKET_NAME ${BACKUP_DIR}
 
 echo "All files retrieved from Alibaba OSS. Now transferring to Minio..."
 IFS=$'\n'
